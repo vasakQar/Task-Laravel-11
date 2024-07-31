@@ -31,25 +31,4 @@ class ReportRepository implements ReportRepositoryInterface
             ->groupBy('date')
             ->get();
     }
-
-    public function getById(int $id): Model|Builder
-    {
-        // TODO: Implement getById() method.
-    }
-
-    public function create(array $requestData): Model|Builder
-    {
-        return $this->model->newQuery()
-            ->create($requestData);
-    }
-
-    public function update(int $id, array $requestData): bool
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete(int $id): bool
-    {
-        // TODO: Implement delete() method.
-    }
 }

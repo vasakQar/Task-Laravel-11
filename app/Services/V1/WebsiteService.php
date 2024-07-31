@@ -2,6 +2,7 @@
 
 namespace App\Services\V1;
 
+use App\Models\Website;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Services\V1\Contracts\WebsiteServiceInterface;
@@ -34,9 +35,9 @@ class WebsiteService implements WebsiteServiceInterface
         return $this->websiteRepository->create($requestData);
     }
 
-    public function update(int $id, array $requestData): bool
+    public function update(Website $website, array $requestData): bool
     {
-        return $this->websiteRepository->update($id, $requestData);
+        return $this->websiteRepository->update($website->id, $requestData);
     }
 
     public function delete(int $id): bool

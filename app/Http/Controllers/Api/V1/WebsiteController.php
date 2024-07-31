@@ -10,6 +10,7 @@ use App\Http\Requests\Api\V1\Website\IndexRequest;
 use App\Http\Requests\Api\V1\Website\StoreRequest;
 use App\Services\V1\Contracts\WebsiteServiceInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class WebsiteController extends Controller
 {
@@ -41,13 +42,13 @@ class WebsiteController extends Controller
         return new WebsiteResource($website);
     }
 
-    public function update(StoreRequest $request, Website $website): \Illuminate\Http\Response
+    public function update(StoreRequest $request, Website $website): Response
     {
         $this->websiteService->update($website, $request->validated());
         return response()->noContent();
     }
 
-    public function destroy(Website $website): \Illuminate\Http\Response
+    public function destroy(Website $website): Response
     {
         $this->websiteService->delete($website->id);
         return response()->noContent();

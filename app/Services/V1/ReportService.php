@@ -29,26 +29,6 @@ class ReportService implements ReportServiceInterface
         ];
     }
 
-    public function getById(int $id): Model|Builder
-    {
-        // TODO: Implement getById() method.
-    }
-
-    public function create(array $requestData): Model|Builder
-    {
-        // TODO: Implement create() method.
-    }
-
-    public function update(int $id, array $requestData): bool
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete(int $id): bool
-    {
-        // TODO: Implement delete() method.
-    }
-
     private static function getReportsTotal($reports): array
     {
         return [

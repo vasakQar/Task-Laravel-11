@@ -10,12 +10,4 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 interface ReportRepositoryInterface
 {
     public function getAll(): Collection;
-
-    public function getById(int $id): Model|Builder;
-
-    public function create(array $requestData): Model|Builder;
-
-    public function update(int $id, array $requestData): bool;
-
-    public function delete(int $id): bool;
 }
