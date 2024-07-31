@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Website;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\WebsiteResource;
 use App\Http\Requests\Api\V1\Website\IndexRequest;
 use App\Http\Requests\Api\V1\Website\StoreRequest;
 use App\Services\V1\Contracts\WebsiteServiceInterface;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class WebsiteController extends Controller
 {
@@ -34,23 +34,34 @@ class WebsiteController extends Controller
 
         return (new WebsiteResource($website))
             ->response()
-            ->setStatusCode(201);
+            ->setStatusCode(HttpResponse::HTTP_CREATED);
     }
 
-    public function show(Website $website): WebsiteResource
+    public function show($id): WebsiteResource
     {
+        $website = $this->websiteService->getById($id);
+
         return new WebsiteResource($website);
     }
 
-    public function update(StoreRequest $request, Website $website): Response
+    public function update(StoreRequest $request, $id): Response
     {
-        $this->websiteService->update($website, $request->validated());
+        $this->websiteService->update($id, $request->validated());
+
         return response()->noContent();
     }
 
-    public function destroy(Website $website): Response
+    public function destroy($id): Response
     {
-        $this->websiteService->delete($website->id);
+        $this->websiteService->delete($id);
+
         return response()->noContent();
+    }
+
+    public function websiteReports(int $id): JsonResponse
+    {
+        $res = $this->websiteService->websiteReports($id);
+
+        return response()->json($res);
     }
 }

@@ -17,7 +17,7 @@ class UserRepository implements CRUDRepositoryInterface
         $this->model = $model;
     }
 
-    public function getAll(array $requestData): LengthAwarePaginator
+    public function getAll(int $perPage): LengthAwarePaginator
     {
         // TODO: Implement getAll() method.
     }

@@ -2,18 +2,17 @@
 
 namespace App\Services\V1;
 
-use App\Models\Website;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Services\V1\Contracts\WebsiteServiceInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Repositories\V1\Contracts\CRUDRepositoryInterface;
+use App\Repositories\V1\Contracts\WebsiteRepositoryInterface;
 
 class WebsiteService implements WebsiteServiceInterface
 {
-    protected CRUDRepositoryInterface $websiteRepository;
+    protected WebsiteRepositoryInterface $websiteRepository;
 
-    public function __construct(CRUDRepositoryInterface $websiteRepository)
+    public function __construct(WebsiteRepositoryInterface $websiteRepository)
     {
         $this->websiteRepository = $websiteRepository;
     }
@@ -27,7 +26,7 @@ class WebsiteService implements WebsiteServiceInterface
 
     public function getById(int $id): Model|Builder
     {
-        // TODO: Implement getById() method.
+        return $this->websiteRepository->getById($id);
     }
 
     public function create(array $requestData): Model|Builder
@@ -35,13 +34,34 @@ class WebsiteService implements WebsiteServiceInterface
         return $this->websiteRepository->create($requestData);
     }
 
-    public function update(Website $website, array $requestData): bool
+    public function update(int $id, array $requestData): bool
     {
-        return $this->websiteRepository->update($website->id, $requestData);
+        return $this->websiteRepository->update($id, $requestData);
     }
 
     public function delete(int $id): bool
     {
         return $this->websiteRepository->delete($id);
+    }
+
+    public function websiteReports(int $id): array
+    {
+        $websiteReports = $this->websiteRepository->websiteReports($id);
+        $total = self::getReportsTotal($websiteReports);
+        $websiteReports['total'] = $total;
+
+        return [
+            'data' => $websiteReports
+        ];
+    }
+
+    private static function getReportsTotal($reports): array
+    {
+        return [
+            'sum' => array_sum(array_column($reports->toArray(), 'revenue')),
+            'impressions' => array_sum(array_column($reports->toArray(), 'impressions')),
+            'clicks' => array_sum(array_column($reports->toArray(), 'clicks')),
+            'cpm' => array_sum(array_column($reports->toArray(), 'cpm')),
+        ];
     }
 }

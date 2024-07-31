@@ -21,6 +21,7 @@ Route::prefix('v1')->group(function () {
 
         Route::post('logout', [AuthController::class, 'logout']);
 
+        Route::get('websites/{id}/reports', [WebsiteController::class, 'websiteReports']);
         Route::apiResource('websites', WebsiteController::class);
         Route::apiResource('reports', ReportController::class);
     });

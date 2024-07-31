@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Repositories\V1\Contracts\CRUDRepositoryInterface;
+use App\Repositories\V1\Contracts\ReportRepositoryInterface;
+use App\Repositories\V1\Contracts\WebsiteRepositoryInterface;
 
-class WebsiteRepository implements CRUDRepositoryInterface
+class WebsiteRepository implements CRUDRepositoryInterface, WebsiteRepositoryInterface
 {
     protected Website $model;
 
-    public function __construct(Website $model)
+    protected ReportRepositoryInterface $reportRepository;
+
+    public function __construct(Website $model, ReportRepositoryInterface $reportRepository)
     {
         $this->model = $model;
+        $this->reportRepository = $reportRepository;
     }
 
     public function getAll(int $perPage): LengthAwarePaginator
@@ -44,5 +49,12 @@ class WebsiteRepository implements CRUDRepositoryInterface
     {
         return $this->getById($id)
             ->delete();
+    }
+
+    public function websiteReports(int $id): object
+    {
+        $this->getById($id);
+
+        return $this->reportRepository->getReportsByWebsite($id);
     }
 }

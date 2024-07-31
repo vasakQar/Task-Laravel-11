@@ -22,10 +22,10 @@ class ReportService implements ReportServiceInterface
     {
         $reports = $this->reportRepository->getAll();
         $total = self::getReportsTotal($reports);
+        $reports['total'] = $total;
 
         return [
-            'data' => $reports,
-            'total' => $total
+            'data' => $reports
         ];
     }
 

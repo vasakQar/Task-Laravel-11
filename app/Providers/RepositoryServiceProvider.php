@@ -2,18 +2,19 @@
 
 namespace App\Providers;
 
-use App\Repositories\V1\Contracts\ReportRepositoryInterface;
-use App\Repositories\V1\ReportRepository;
-use App\Repositories\V1\WebsiteRepository;
-use App\Services\V1\Contracts\ReportServiceInterface;
-use App\Services\V1\Contracts\WebsiteServiceInterface;
-use App\Services\V1\ReportService;
 use App\Services\V1\UserService;
-use App\Repositories\V1\UserRepository;
+use App\Services\V1\ReportService;
 use App\Services\V1\WebsiteService;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\V1\UserRepository;
+use App\Repositories\V1\ReportRepository;
+use App\Repositories\V1\WebsiteRepository;
 use App\Services\V1\Contracts\UserServiceInterface;
+use App\Services\V1\Contracts\ReportServiceInterface;
+use App\Services\V1\Contracts\WebsiteServiceInterface;
 use App\Repositories\V1\Contracts\CRUDRepositoryInterface;
+use App\Repositories\V1\Contracts\ReportRepositoryInterface;
+use App\Repositories\V1\Contracts\WebsiteRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -31,16 +32,12 @@ class RepositoryServiceProvider extends ServiceProvider
 
         // Website
         $this->app->when(WebsiteService::class)
-            ->needs(CRUDRepositoryInterface::class)
+            ->needs(WebsiteRepositoryInterface::class)
             ->give(WebsiteRepository::class);
 
         $this->app->bind(WebsiteServiceInterface::class, WebsiteService::class);
 
         // Report
-//        $this->app->when(ReportService::class)
-//            ->needs(CRUDRepositoryInterface::class)
-//            ->give(ReportRepository::class);
-
         $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
         $this->app->bind(ReportServiceInterface::class, ReportService::class);
     }

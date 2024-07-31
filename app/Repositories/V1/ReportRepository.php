@@ -4,9 +4,6 @@ namespace App\Repositories\V1;
 
 use App\Models\Report;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\V1\Contracts\ReportRepositoryInterface;
 
 class ReportRepository implements ReportRepositoryInterface
@@ -18,7 +15,17 @@ class ReportRepository implements ReportRepositoryInterface
         $this->model = $model;
     }
 
-    public function getAll(): Collection
+    public function getAll(): object
+    {
+        return $this->commonQuery();
+    }
+
+    public function getReportsByWebsite(int $websiteId): object
+    {
+        return $this->commonQuery($websiteId);
+    }
+
+    private function commonQuery($websiteId = null)
     {
         return $this->model->newQuery()
             ->select(
@@ -28,7 +35,18 @@ class ReportRepository implements ReportRepositoryInterface
                 DB::raw('SUM(clicks) as clicks'),
                 DB::raw('CASE WHEN SUM(impressions) > 0 THEN (SUM(revenue) * 1000 / SUM(impressions)) ELSE 0 END as cpm')
             )
+            ->when($websiteId, function ($query) use ($websiteId) {
+                $query->where('website_id', $websiteId);
+            })
             ->groupBy('date')
-            ->get();
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->date => [
+                    'revenue' => $item->revenue,
+                    'impressions' => $item->impressions,
+                    'clicks' => $item->clicks,
+                    'cpm' => $item->cpm
+                ]];
+            });
     }
 }
