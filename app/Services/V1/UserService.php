@@ -34,7 +34,7 @@ class UserService implements UserServiceInterface
     {
         if (!Auth::attempt(['email' => $inputs['email'], 'password' => $inputs['password']])) {
             return [
-                'success' => 'false',
+                'success' => false,
                 'data' => [
                     'message' => 'Incorrect data!'
                 ]

@@ -23,7 +23,7 @@ Route::prefix('v1')->group(function () {
 
         Route::get('websites/{id}/reports', [WebsiteController::class, 'websiteReports']);
         Route::apiResource('websites', WebsiteController::class);
-        Route::apiResource('reports', ReportController::class);
+        Route::get('reports', [ReportController::class, 'index']);
     });
 });
 

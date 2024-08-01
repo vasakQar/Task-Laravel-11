@@ -54,7 +54,7 @@ class WebsiteService implements WebsiteServiceInterface
         $reportsArray['total'] = $this->getReportsTotal($reportsArray);
 
         return [
-            'data' => $websiteReports
+            'data' => $reportsArray
         ];
     }
 }

@@ -30,10 +30,10 @@ class ReportRepository implements ReportRepositoryInterface
         return $this->model->newQuery()
             ->select(
                 DB::raw('DATE(date) as date'),
-                DB::raw('SUM(revenue) as revenue'),
-                DB::raw('SUM(impressions) as impressions'),
-                DB::raw('SUM(clicks) as clicks'),
-                DB::raw('CASE WHEN SUM(impressions) > 0 THEN (SUM(revenue) * 1000 / SUM(impressions)) ELSE 0 END as cpm')
+                DB::raw('FORMAT(SUM(revenue), 2) as revenue'),
+                DB::raw('FORMAT(SUM(impressions), 2) as impressions'),
+                DB::raw('FORMAT(SUM(clicks), 2) as clicks'),
+                DB::raw('FORMAT(CASE WHEN SUM(impressions) > 0 THEN (SUM(revenue) * 1000 / SUM(impressions)) ELSE 0 END, 2) as cpm')
             )
             ->when($websiteId, function ($query) use ($websiteId) {
                 $query->where('website_id', $websiteId);

@@ -10,6 +10,8 @@ class Report extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'website_id',
         'revenue',
