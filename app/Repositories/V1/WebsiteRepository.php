@@ -6,11 +6,10 @@ use App\Models\Website;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use App\Repositories\V1\Contracts\CRUDRepositoryInterface;
 use App\Repositories\V1\Contracts\ReportRepositoryInterface;
 use App\Repositories\V1\Contracts\WebsiteRepositoryInterface;
 
-class WebsiteRepository implements CRUDRepositoryInterface, WebsiteRepositoryInterface
+class WebsiteRepository implements WebsiteRepositoryInterface
 {
     protected Website $model;
 
