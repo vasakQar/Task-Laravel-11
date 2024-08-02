@@ -2,7 +2,7 @@
 
 namespace App\Services\V1;
 
-use App\ReportsTotalTrait;
+use App\Traits\ReportsTotalTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Services\V1\Contracts\WebsiteServiceInterface;

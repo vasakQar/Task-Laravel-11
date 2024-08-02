@@ -2,7 +2,7 @@
 
 namespace App\Services\V1;
 
-use App\ReportsTotalTrait;
+use App\Traits\ReportsTotalTrait;
 use App\Repositories\V1\ReportRepository;
 use App\Services\V1\Contracts\ReportServiceInterface;
 

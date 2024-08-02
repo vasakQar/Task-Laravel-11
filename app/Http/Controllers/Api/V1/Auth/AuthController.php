@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\UserResource;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Api\V1\Auth\LoginRequest;
 use App\Http\Requests\Api\V1\Auth\LogoutRequest;
 use App\Http\Requests\Api\V1\Auth\RegisterRequest;
-use App\Http\Resources\V1\UserResource;
 use App\Services\V1\Contracts\UserServiceInterface;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
